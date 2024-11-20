@@ -140,6 +140,12 @@ io.on('connection', (soc) => {
 app.use(bodyParser.json())
 app.use(cookieParser())
 
+app.use((req, res, next) => {
+    console.log(`Request URL: ${req.url}`);
+    console.log(`Cookies:`, req.cookies); 
+    next();
+});
+
 
 app.use('/api', require('./routes/chatRoutes'))
 

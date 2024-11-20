@@ -15,7 +15,7 @@ const server = http.createServer(app)
 
 const allowedOrigins = [
     'http://localhost:3000',
-    'http://localhost:3001',
+    'https://tractor-client.vercel.app',
     'https://tractor-dashboard.vercel.app',
     'https://tractor-hub.netlify.app',
     'https://dashboard-tractor-hub.netlify.app'

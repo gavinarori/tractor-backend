@@ -4,7 +4,7 @@ const {
 } = require('./utiles/db')
 const app = express()
 const cors = require('cors')
-const http = require('https')
+const http = require('http')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 require('dotenv').config()
@@ -12,26 +12,17 @@ const socket = require('socket.io')
 
 const server = http.createServer(app)
 
-
-const allowedOrigins = [
-    'http://localhost:3000',
-    'https://tractor-client.vercel.app',
-    'https://tractor-dashboard.vercel.app',
-    'https://tractor-hub.netlify.app',
-    'https://dashboard-tractor-hub.netlify.app'
-];
-
 app.use(cors({
-    origin: allowedOrigins,
-    credentials: true,
-}));
+    origin: ["https://tractor-dashboard.vercel.app","https://tractor-hub.netlify.app",'https://tractor-client.vercel.app','https://dashboard-tractor-hub.netlify.app' ],
+    credentials: true
+}))
 
 const io = socket(server, {
     cors: {
-        origin: allowedOrigins,
-        credentials: true,
+        origin: '*',
+        credentials: true
     }
-});
+})
 
 
 var allCustomer = []

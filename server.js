@@ -12,17 +12,26 @@ const socket = require('socket.io')
 
 const server = http.createServer(app)
 
+
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://tractor-dashboard.vercel.app',
+    'https://tractor-hub.netlify.app',
+    'https://dashboard-tractor-hub.netlify.app'
+];
+
 app.use(cors({
-    origin: ["https://tractor-dashboard.vercel.app","https://tractor-hub.netlify.app" ],
-    credentials: true
-}))
+    origin: allowedOrigins,
+    credentials: true,
+}));
 
 const io = socket(server, {
     cors: {
-        origin: '*',
-        credentials: true
+        origin: allowedOrigins,
+        credentials: true,
     }
-})
+});
 
 
 var allCustomer = []

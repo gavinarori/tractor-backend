@@ -13,7 +13,7 @@ const socket = require('socket.io')
 const server = http.createServer(app)
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001',"https://tractor-backend-xk1t.onrender.com"],
+    origin: ['http://localhost:3000', 'http://localhost:3001',"https://dashboard-tractor-hub.netlify.app","https://tractor-hub.netlify.app" ],
     credentials: true
 }))
 

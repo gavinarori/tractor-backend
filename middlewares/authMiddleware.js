@@ -1,21 +1,16 @@
-const jwt = require('jsonwebtoken');
-
 module.exports.authMiddleware = async (req, res, next) => {
-    console.log('Cookies received in authMiddleware:', req.cookies); 
-
-    const { accessToken } = req.cookies;
-
-    if (!accessToken) {
-        console.error('Access token missing in cookies');
-        return res.status(401).json({ error: 'Please login first' }); 
+    const token = req.headers['authorization']?.split(' ')[1]; 
+    if (!token) {
+        console.error('Access token missing in Authorization header');
+        return res.status(401).json({ error: 'Please login first' });
     }
 
     try {
-        const decodedToken = jwt.verify(accessToken, process.env.SECRET);
+        const decodedToken = jwt.verify(token, process.env.SECRET);
         req.role = decodedToken.role;
         req.id = decodedToken.id;
 
-        console.log('Token decoded successfully:', decodedToken); 
+        console.log('Token decoded successfully:', decodedToken);
         next();
     } catch (error) {
         console.error('Token verification failed:', error.message);

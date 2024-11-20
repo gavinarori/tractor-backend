@@ -8,60 +8,56 @@ const { responseReturn } = require('../utiles/response')
 const { createToken } = require('../utiles/tokenCreate')
 class authControllers {
     admin_login = async (req, res) => {
-        const { email, password } = req.body;
+        const { email, password } = req.body
         try {
-            const admin = await adminModel.findOne({ email }).select('+password');
+            const admin = await adminModel.findOne({ email }).select('+password')
             if (admin) {
-                const match = await bcrpty.compare(password, admin.password);
+                const match = await bcrpty.compare(password, admin.password)
                 if (match) {
                     const token = await createToken({
                         id: admin.id,
                         role: admin.role
-                    });
+                    })
                     res.cookie('accessToken', token, {
-                        httpOnly: true,
-                        sameSite: 'None',
                         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-                    });
-                    responseReturn(res, 200, { token, message: 'Login success' });
+                    })
+                    responseReturn(res, 200, { token, message: 'Login success' })
                 } else {
-                    responseReturn(res, 404, { error: 'Invalid credentials' });
+                    responseReturn(res, 404, { error: "Password wrong" })
                 }
             } else {
-                responseReturn(res, 404, { error: 'Invalid credentials' });
+                responseReturn(res, 404, { error: "Email not found" })
             }
         } catch (error) {
-            responseReturn(res, 500, { error: error.message });
+            responseReturn(res, 500, { error: error.message })
         }
-    };
+    }
 
     seller_login = async (req, res) => {
-        const { email, password } = req.body;
+        const { email, password } = req.body
         try {
-            const seller = await sellerModel.findOne({ email }).select('+password');
+            const seller = await sellerModel.findOne({ email }).select('+password')
             if (seller) {
-                const match = await bcrpty.compare(password, seller.password);
+                const match = await bcrpty.compare(password, seller.password)
                 if (match) {
                     const token = await createToken({
                         id: seller.id,
                         role: seller.role
-                    });
+                    })
                     res.cookie('accessToken', token, {
-                        httpOnly: true,
-                        sameSite: 'None',
                         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-                    });
-                    responseReturn(res, 200, { token, message: 'Login success' });
+                    })
+                    responseReturn(res, 200, { token, message: 'Login success' })
                 } else {
-                    responseReturn(res, 404, { error: 'Invalid credentials' });
+                    responseReturn(res, 404, { error: "Password wrong" })
                 }
             } else {
-                responseReturn(res, 404, { error: 'Invalid credentials' });
+                responseReturn(res, 404, { error: "Email not found" })
             }
         } catch (error) {
-            responseReturn(res, 500, { error: error.message });
+            responseReturn(res, 500, { error: error.message })
         }
-    };
+    }
 
     seller_register = async (req, res) => {
         const { email, name, password } = req.body
@@ -158,20 +154,14 @@ class authControllers {
 
     logout = async (req, res) => {
         try {
-            // Only clear the cookie if it's set
-            if (req.cookies.accessToken) {
-                res.cookie('accessToken', null, {
-                    expires: new Date(Date.now()),
-                    httpOnly: true,
-                    sameSite: 'None'
-                });
-                responseReturn(res, 200, { message: 'Logout success' });
-            } else {
-                responseReturn(res, 400, { message: 'No active session found' });
-            }
+            res.cookie('accessToken',null,{
+                expires : new Date(Date.now()),
+                httpOnly : true
+            })
+            responseReturn(res,200,{message : 'logout success'})
         } catch (error) {
-            responseReturn(res, 500, { error: error.message });
+            responseReturn(res, 500, { error: error.message })
         }
-    };
+    }
 }
 module.exports = new authControllers()

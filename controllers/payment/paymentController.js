@@ -21,8 +21,8 @@ class paymentController {
 
                 const accountLink = await stripe.accountLinks.create({
                     account: account.id,
-                    refresh_url: 'http://localhost:3001/refresh',
-                    return_url: `http://localhost:3001/success?activeCode=${uid}`,
+                    refresh_url: 'https://dashboard-tractor-hub.netlify.app/refresh',
+                    return_url: `https://dashboard-tractor-hub.netlify.app/success?activeCode=${uid}`,
                     type: 'account_onboarding'
                 })
                 await striptModel.create({
@@ -36,8 +36,8 @@ class paymentController {
 
                 const accountLink = await stripe.accountLinks.create({
                     account: account.id,
-                    refresh_url: 'http://localhost:3001/refresh',
-                    return_url: `http://localhost:3001/success?activeCode=${uid}`,
+                    refresh_url: 'https://dashboard-tractor-hub.netlify.app/refresh',
+                    return_url: `https://dashboard-tractor-hub.netlify.app/success?activeCode=${uid}`,
                     type: 'account_onboarding'
                 })
                 await striptModel.create({
